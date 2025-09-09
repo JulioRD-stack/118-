@@ -1,0 +1,19 @@
+        .text
+        .global _start
+
+_start:
+LOOP:   
+        LDR     r1, =KEY_BASE        // Load KEY registers
+        LDR     r0, [r1]             // Read current button
+        CMP     r0, #0               // Compare with 0
+        BEQ     LED_OFF              branch to turn LEDs of
+LED_ON: 
+        LDR     r2, =LEDR_BASE       // Load address of red LEDs
+        MOV     r3, #0xFF            // 0xFF = all LEDs ON (assuming 8 LEDs)
+        STR     r3, [r2]             // Write pattern to LEDs
+        B       LOOP                 // Go back to loop
+LED_OFF:
+        LDR     r2, =LEDR_BASE       // Load address of red LEDs
+        MOV     r3, #0x00            // 0x00 = all LEDs OFF
+        STR     r3, [r2]             // Write pattern to LEDs
+        B       LOOP                 // Go back to loop
