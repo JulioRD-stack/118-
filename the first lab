@@ -1,12 +1,17 @@
+        .text
+        .global _start
+
+        .equ    KEY_BASE,  0xFF200050   // base address of pushbutton keys
+        .equ    LEDR_BASE, 0xFF200000   // base address of red LEDs
 
 _start:
 LOOP:   
         LDR     r1, =KEY_BASE        // Load KEY registers
         LDR     r0, [r1]             // Read current button
         CMP     r0, #0               // Compare with 0
-        BEQ     LED_OFF              branch to turn LEDs of
+        BEQ     LED_OFF              // branch to turn LEDs off
 LED_ON: 
-        LDR     r2, =LEDR_BASE       // Load address of red LEDs
+        LDR     r2, =LEDR_BASE       // Load address of red LEDs//
         MOV     r3, #0xFF            // 0xFF = all LEDs ON (assuming 8 LEDs)
         STR     r3, [r2]             // Write pattern to LEDs
         B       LOOP                 // Go back to loop
